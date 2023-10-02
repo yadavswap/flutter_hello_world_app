@@ -1,48 +1,67 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
-  
+  runApp(MyButton());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyButton extends StatefulWidget {
+  const MyButton({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context){
+  State<MyButton> createState() => _MyButtonState();
+}
+
+class _MyButtonState extends State<MyButton> {
+  int counter = 0;
+  String defaultText = "Spanish Numbers";
+
+  List<String> spanishNumbers = [
+    "uno",
+    "dos",
+    "tres",
+    "cuatro",
+    "cinco",
+    "seis",
+    "seite",
+    "ucho",
+    "nueve",
+    "diet",
+  ];
+
+  void displayText() {
+    setState(() {
+      defaultText = spanishNumbers[counter];
+      if (counter < 9) {
+        counter += 1;
+      } else {
+        counter = 0;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-    title: 'Flutter App',
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primaryColor: Colors.green,
-      hintColor: Colors.orange,
-    ),
-    home: Scaffold(
+        home: Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter'),
-        backgroundColor: Colors.black,
+        title: Text('My stateful App'),
+        backgroundColor: Colors.orange,
       ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Hello, I\'m here'),
-            const Text('Hello'),
-            ElevatedButton(
-              child: Text('Sign Up'),
-              onPressed: () {},
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.orange),
-                  overlayColor: MaterialStateProperty.all(Colors.blue)),
-            ),
-          ],
-        ),
+      
+         children: [
+          Text(defaultText, style: TextStyle(fontSize: 30.0)),
+          Padding(
+            padding: EdgeInsets.all(10),
+          ),
+          FloatingActionButton(
+            onPressed: displayText,
+            child: const Icon(Icons.add_a_photo),
+          )
+        ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add_a_photo),
-      ),
-    ),
-  );
+    ));
   }
 }
